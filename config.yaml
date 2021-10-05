@@ -5,7 +5,7 @@ params:
     input_shape: [28.28]
     losss_function: sparse_categorical_crossentropy
     metrics: accuracy
-    optimizer: SCD
+    optimizer: SGD
     validation_datasize: 50000
 
 artifacts:
