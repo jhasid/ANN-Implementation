@@ -6,13 +6,15 @@ ANN-Implementation
 ### creating envs
 
 ```bash
-conda create --prefix ./envs python=3.8 -y
+conda create --prefix ./envs python=3.8 -y    
 ```
 
 ### Activating env
 
 ```bash
 conda activate ./envs
+    or
+source activate ./envs  # in pycharm  
 ```
 ## import yaml
 
