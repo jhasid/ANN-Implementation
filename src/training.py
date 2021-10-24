@@ -1,8 +1,11 @@
 import argparse
 import os
+import pandas as pd
+
 from src.utils.common import read_config
 from src.utils.data_mgmnt import get_data
 from src.utils.model import create_model ,save_model
+from src.utils.save_plot import save_plot
 
 
 def training(config_path):
@@ -25,6 +28,7 @@ def training(config_path):
 
     history = model.fit(x_train,y_train, epochs=EPOCHS, validation_data=VALIDATION)
 
+# save model
     artifacts_dir = config["artifacts"]["artifacts_dir"]
     model_dir = config["artifacts"]["model_dir"]
     model_name = config["artifacts"]["model_name"]
@@ -33,6 +37,15 @@ def training(config_path):
     os.makedirs(model_dir_path,exist_ok=True)
 
     save_model(model, model_name, model_dir_path)
+
+# save plot
+
+    plot_dir = config["artifacts"]["plot_dir"]
+    plot_name = config["artifacts"]["plot_name"]
+    plot_dir_path = os.path.join(artifacts_dir, plot_dir)
+    os.makedirs(plot_dir_path, exist_ok=True)
+
+    save_plot(pd.DataFrame(history.history), plot_name, plot_dir_path)
 
 if __name__ == '__main__':
     args = argparse.ArgumentParser()
