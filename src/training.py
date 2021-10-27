@@ -1,11 +1,11 @@
-import argparse
 import os
 import pandas as pd
-
 from src.utils.common import read_config
 from src.utils.data_mgmnt import get_data
 from src.utils.model import create_model ,save_model
 from src.utils.save_plot import save_plot
+from src.utils.callbacks import get_callbacks
+import argparse
 
 
 def training(config_path):
@@ -26,7 +26,13 @@ def training(config_path):
     EPOCHS = config["params"]["epochs"]
     VALIDATION = (x_valid,y_valid)
 
-    history = model.fit(x_train,y_train, epochs=EPOCHS, validation_data=VALIDATION)
+
+    # callbacks
+    CALLBACKS_LIST = get_callbacks(config,x_train)
+
+    history = model.fit(x_train,y_train, epochs=EPOCHS, validation_data=VALIDATION,callbacks=CALLBACKS_LIST)
+    
+    #history = model.fit(x_train,y_train, epochs=EPOCHS, validation_data=VALIDATION)
 
 # save model
     artifacts_dir = config["artifacts"]["artifacts_dir"]
